@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <style>
+       @import url(https://fonts.googleapis.com/css?family=Roboto:400,700,300);
+
+body {
+  font-family: "Roboto";
+  background-color: #F2F2F2;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.center {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+
+
+.btn {
+  position: relative;
+  margin: 20px auto;
+  border-radius: 50px;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  padding: 18px;
+  background-color: #FA4A0C;
+  transition-property: width;
+  transition-duration: .3s;
+}
+
+.btn:hover {
+  width: 146px;
+  box-shadow: 0px 0px 0px 5px white;
+  transition: .3s all ease-in-out;
+}
+.btn {
+  box-shadow: 0px 0px 0px 20px white;
+  transition: .3s all ease-in-out;
+}
+.btn:hover .share-label {
+  top: 1px;
+  opacity: 1;
+  transition-property: top, opacity;
+  transition-duration: 0.3s;
+  transition-delay: .3s;
+}
+.btn-container {
+    margin: 5rem 0rem;
+}
+.share-label {
+  margin-left: 33px;
+  top: 7px;
+  opacity: 0;
+  position: relative;
+}
+
+.share-label span {
+  color: white;
+  font-size: 12px;
+}
+
+.share-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.image {
+    text-align: center;
+    
+}
+.image img {
+    margin-top: 10rem;
+}
+span {
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+}
+h4 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    padding: 1.5rem 5rem;
+}
+.btn .share-icon i {
+  font-size: 34px;
+}
+.footer {
+    text-align: center;
+}
+.footer p {
+    font-family: 'Montserrat', sans-serif;
+}
+     </style>
+</head>
+<body>
+    <div class="image">
+    <img src="./grup3.png" alt="img" />
+</div>
+    <div class="center">
+        <div class="btn-container">
+          <div class='btn'>
+            <div class='share-icon'>
+                <img src="./microphoone.png" alt="img" style="width: 25px; margin-left: 4px; margin-top: -3px;" />
+            </div>
+            <div class='share-label'>
+              <span>Vazhdoni ju lutem</span>
+            </div>
+          </div>
+          <h4> Klikoni Buttonin dhe Thuani me ze "Show me my rights"</h4>
+        </div>
+        <div class="footer">
+            <p>@Copyright 2021 Grupi JusTech.</p>
+        </div>
+        
+      </div>
+    <h3 class="content"></h3>
+    <script>
+        // The JavaScript Part Starts
+        const btn = document.querySelector('.btn');
+        const content = document.querySelector('.content');
+
+     
+     const Rights = [
+            'showing your rights'
+     ];
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition =  new SpeechRecognition();
+
+        recognition.onstart = function(){
+            console.log('How Can I Help You ?')
+        }
+        recognition.onresult = function (event) {
+            const current = event.resultIndex;
+
+            const transcript = event.results[current][0].transcript;
+            content.textContent = transcript;
+            readOutLoud(transcript);
+
+        };
+
+        btn.addEventListener('click', () =>{
+            recognition.start();
+        });
+
+
+        function readOutLoud(message){
+            const speech = new SpeechSynthesisUtterance();
+
+            speech.text = 'I am not able to understand ,sir';
+
+                if(message.includes('rights')){
+                const finalText = 
+                    Rights[Math.floor(Math.random()*Rights.length)];
+                speech.text = finalText; 
+                window.open('https://edrejtajem.org/te-drejtat-e-mia/')
+                }
+            speech.volume = 1;
+            speech.rate = 1.1;
+            speech.pitch = 1;
+
+            window.speechSynthesis.speak(speech);
+        }
+    </script>
+</body>
+</html>
